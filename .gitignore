@@ -107,3 +107,4 @@ fabric.properties
 # Sonarlint plugin
 .idea/sonarlint
 .idea/
+node_modules/

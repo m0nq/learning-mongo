@@ -1,19 +1,18 @@
 {
   "name": "learning_mongodb",
   "version": "1.0.0",
-  "description": "Required libraries for the learning_mongodb class",
+  "description": "Project for learning MongoDB",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
-    "type":"git",
-    "url":"git://githubcom/synedra/learning_mongo.git"
+    "type": "git",
+    "url": "https://github.com/m0nq/learning-mongo"
   },
   "author": "Kirsten Hunter",
   "license": "ISC",
   "dependencies": {
-    "hapi": "^16.1.0",
-    "mongodb": "^2.2.22"
+    "@hapi/hapi": "^18.3.2",
+    "mongodb": "^3.3.2"
   }
 }
