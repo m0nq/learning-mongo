@@ -15,7 +15,7 @@ const init = async collection => {
     {
       method: 'GET',
       path: '/api/tours',
-      config: {json: { space: 2}},
+      config: { json: { space: 2 } },
       handler: (request, h) => {
         const findObject = {};
         for (let key in request.query) {
@@ -28,8 +28,8 @@ const init = async collection => {
     {
       method: 'POST',
       path: '/api/tours',
-      handler: (request, reply) => {
-        reply('Adding new tour');
+      handler: (request, h) => {
+        return collection.insertOne(request.payload);
       }
     },
     // Get a single tour
@@ -37,7 +37,7 @@ const init = async collection => {
       method: 'GET',
       path: '/api/tours/{name}',
       handler: (request, h) => {
-        return collection.findOne({'tourName': request.params.name});
+        return collection.findOne({ 'tourName': request.params.name });
       }
     },
     // Update a single tour
@@ -46,7 +46,14 @@ const init = async collection => {
       path: '/api/tours/{name}',
       handler: (request, reply) => {
         // request.payload variables
-        reply(`Updating ${request.params.name}`);
+        if (request.query.replace) {
+          request.payload.tourName = request.params.name;
+          collection.replaceOne({ 'tourName': request.params.name }, request.payload);
+          return collection.findOne({ 'tourName': request.params.name });
+        }
+
+        collection.updateOne({ 'tourName': request.params.name }, { $set: request.payload });
+        return collection.findOne({ 'tourName': request.params.name });
       }
     },
     // Delete a single tour
@@ -54,7 +61,8 @@ const init = async collection => {
       method: 'DELETE',
       path: '/api/tours/{name}',
       handler: (request, reply) => {
-        reply(`Deleting ${request.params.name}`).code(204);
+        collection.deleteOne({ 'tourName': request.params.name });
+        return `Deleting ${request.params.name}`;
       }
     },
     // Home page
@@ -62,7 +70,7 @@ const init = async collection => {
       method: 'GET',
       path: '/',
       handler: (request, reply) => {
-        reply('Hello world from Hapi/Mongo example.');
+        return 'Hello world from Hapi/Mongo example.';
       }
     }
   ]);
