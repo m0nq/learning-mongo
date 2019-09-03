@@ -4,6 +4,8 @@
   "description": "Project for learning MongoDB",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "debug": "node inspect index.js"
   },
   "repository": {
     "type": "git",
